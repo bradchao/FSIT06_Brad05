@@ -61,14 +61,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //removeItem(i);
-                showConfirmDialog();
+                showConfirmDialog(i);
                 return true;
             }
         });
 
     }
 
-    private void showConfirmDialog(){
+    private void showConfirmDialog(final int index){
         AlertDialog dialog = null;
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -79,7 +79,8 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Log.v("brad", "OK");
+                        //Log.v("brad", "OK");
+                        removeItem(index);
                     }
                 });
         dialog = builder.create();
