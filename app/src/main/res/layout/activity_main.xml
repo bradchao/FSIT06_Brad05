@@ -19,13 +19,15 @@
             android:layout_height="wrap_content"
             android:text="Add"
             android:layout_alignParentRight="true"
+            android:onClick="addItem"
             />
         <Button
             android:id="@+id/search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@id/add"
-            android:text="searc"
+            android:text="search"
+            android:onClick="search"
             />
         <EditText
             android:id="@+id/input"
