@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -43,6 +45,28 @@ public class MainActivity extends AppCompatActivity {
         adapter = new SimpleAdapter(this, data,
                 R.layout.item, from, to);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //Log.v("brad", "item:" + i);
+                Toast.makeText(MainActivity.this, data.get(i).get("brad"),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                removeItem(i);
+                return true;
+            }
+        });
+
+    }
+
+    private void removeItem(int i){
+        data.remove(i);
+        adapter.notifyDataSetChanged();
     }
 
 
@@ -58,19 +82,28 @@ public class MainActivity extends AppCompatActivity {
         String key = input.getText().toString();
         Log.v("brad", "size: " + data.size());
 
-        LinkedList<HashMap<String,String>> temp = new LinkedList<>();
-        for (HashMap<String,String> row : data){
-            String brad = row.get("brad");
-            if (brad.contains(key)){
-                temp.add(row);
-                Log.v("brad", brad);
+        for (int i=0; i<data.size(); i++){
+            String brad = data.get(i).get("brad");
+            if (!brad.contains(key)){
+                data.remove(i);
+                i--;
             }
         }
 
-        data.clear();
-        for (HashMap<String,String> row : temp){
-            data.add(row);
-        }
+
+//        LinkedList<HashMap<String,String>> temp = new LinkedList<>();
+//        for (HashMap<String,String> row : data){
+//            String brad = row.get("brad");
+//            if (brad.contains(key)){
+//                temp.add(row);
+//                Log.v("brad", brad);
+//            }
+//        }
+//
+//        data.clear();
+//        for (HashMap<String,String> row : temp){
+//            data.add(row);
+//        }
 
 
         adapter.notifyDataSetChanged();
